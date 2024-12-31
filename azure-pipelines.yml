@@ -26,7 +26,6 @@ steps:
     script: |
       # Now run the Nexla command that was failing previously
       echo "Running Nexla command"
-      source venv/bin/activate
       nexla --version
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
