@@ -15,8 +15,8 @@ steps:
       # Ensure the correct Python environment is activated
       echo "Checking Python version"
       python --version
-      nexla source
-  displayName: 'Install and Verify Nexla'
+      source venv/bin/activate
+  displayName: 'Install and Venv Activated'
 
 - task: Bash@3
   inputs:
