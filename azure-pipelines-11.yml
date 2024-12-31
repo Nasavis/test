@@ -24,7 +24,7 @@ steps:
     script: |
       echo "Installing wheel file"
       echo $(Build.SourcesDirectory)
-      pip3 install nexla-3.2.3-py3-none-any.whl --break-system-packages
+      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
   displayName: 'Install Nexla Wheel File'
   continueOnError: false
 
@@ -35,8 +35,18 @@ steps:
     script: |
       # Use pip show to find the installation path of nexla
       pip show nexla
-      nexla --version
   displayName: 'Find Nexla Installation Path'
+  continueOnError: false
+
+# Step to add Nexla to the PATH (adjust for Windows)
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Update PATH for Windows system (adjust according to your Python environment)
+      export PATH=$PATH:\home\groot\.local\lib\python3.12\site-packages
+      echo "Updated PATH: $PATH"
+  displayName: 'Update PATH for Nexla'
   continueOnError: false
 
 # Step to set API environment variables
@@ -44,10 +54,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      nexla --version 
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
       echo "API_URL is: $API_URL"
       echo "API_KEY is: $API_KEY"
+      'nexla env configure --api-key-use-env
   displayName: 'Set Nexla API Environment Variables'
   continueOnError: false
 
