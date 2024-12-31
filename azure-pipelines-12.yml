@@ -1,44 +1,58 @@
 trigger:
-- main
+  - main
 
 pool:
   name: 'Default'
   demands:
     - Agent.Name -equals IMGROOT
 
-
 steps:
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: '|
-    python -m venv venv
-    source venv/bin/activate
-    pip install nexla-3.2.3-py3-none-any.whl'
-  continueOnError: false
-  displayName: 'Installing Nexla CLI'
-
+# Step 1: Install Nexla CLI
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
+      echo "Setting up Python environment"
+      python -m venv venv
+      source venv/bin/activate
+      echo "Installing Nexla CLI"
+      pip install nexla-3.2.3-py3-none-any.whl
+  continueOnError: false
+  displayName: 'Installing Nexla CLI'
+
+# Step 2: Initialize Configuration Parameters
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Exporting API configuration"
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
       echo "API_URL is: $API_URL"
       echo "API_KEY is: $API_KEY"
   continueOnError: false
-  displayName: 'Initalizing the Configuration Parameter'
+  displayName: 'Initializing Configuration Parameters'
 
+# Step 3: Configure Nexla CLI (Init Access)
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'nexla env configure --api-key-use-env'
+    script: |
+      echo "Activating virtual environment"
+      source venv/bin/activate
+      echo "Configuring Nexla CLI"
+      nexla env configure --api-key-use-env
   continueOnError: false
   displayName: 'Configure Nexla CLI (Init Access)'
 
+# Step 4: Export Nexla Pipeline
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'nexla flows export --s 53711 -o 53711.json'
+    script: |
+      echo "Activating virtual environment"
+      source venv/bin/activate
+      echo "Exporting Nexla pipeline"
+      nexla flows export --s 53711 -o 53711.json
   continueOnError: false
-  displayName: 'Exporting the Nexla pipeline'
+  displayName: 'Exporting Nexla Pipeline'
