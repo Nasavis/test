@@ -24,7 +24,7 @@ steps:
     script: |
       echo "Installing Nexla Wheel File"
       echo $(Build.SourcesDirectory)
-      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages --force-reinstall
+      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
   displayName: 'Install Nexla Wheel File'
   continueOnError: false
 
@@ -38,16 +38,20 @@ steps:
   displayName: 'Find Nexla Installation Path'
   continueOnError: false
 
-# Step to add Nexla to the PATH (adjust for Windows and Linux environments)
+# Step to add Nexla to the PATH (adjust for Windows)
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      # Update PATH for Windows system (adjust according to your Python environment)
+      # Output PATH to verify Nexla installation directory
+      echo "Current PATH: $PATH"
+      
+      # Ensure the correct path is added to PATH
       if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         export PATH=$PATH:/home/groot/.local/lib/python3.12/site-packages
         export PATH=$PATH:/home/groot/.local/bin/
       else
+        # Adjust for Windows Python environment
         export PATH=$PATH:/mnt/c/Users/admin/AppData/Local/Python/Python312/Scripts
       fi
       echo "Updated PATH: $PATH"
