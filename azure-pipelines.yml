@@ -15,7 +15,6 @@ steps:
       # Ensure the correct Python environment is activated
       echo "Checking Python version"
       python --version
-      python -m venv venv
       source venv/bin/activate
       pip install nexla-3.2.3-py3-none-any.whl --force
   displayName: 'Install and Venv Activated'
@@ -27,5 +26,6 @@ steps:
       # Now run the Nexla command that was failing previously
       echo "Running Nexla command"
       source venv/bin/activate
-      nexla --version  # Replace with your actual Nexla command
+      nexla --version
+      nexla source
   displayName: 'Run Nexla Command'
