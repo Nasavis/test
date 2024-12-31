@@ -1,0 +1,43 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+
+- script: |
+    # Ensure the correct Python environment is activated
+    echo "Checking Python version"
+    python --version
+
+    # Ensure pip is up-to-date
+    echo "Updating pip"
+    python -m pip install --upgrade pip
+
+    # Install Nexla and required dependencies
+    echo "Installing Nexla and dependencies"
+    python -m pip install nexla
+    python -m pip install beautifultable boto3 requests stdiomask tabulate tenacity validators
+
+    # Verify Nexla installation
+    echo "Verifying Nexla installation"
+    nexla --help
+
+    # Add Nexla to PATH if it's installed locally
+    export PATH=$PATH:/home/groot/.local/bin
+
+    # Verify Nexla command location
+    echo "Checking Nexla location"
+    which nexla
+  displayName: 'Install and Verify Nexla'
+
+- script: |
+    # Now run the Nexla command that was failing previously
+    echo "Running Nexla command"
+    nexla <your-nexla-command-here>  # Replace with your actual Nexla command
+  displayName: 'Run Nexla Command'
