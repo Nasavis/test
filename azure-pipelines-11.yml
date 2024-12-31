@@ -38,6 +38,26 @@ steps:
   displayName: 'Find Nexla Installation Path'
   continueOnError: false
 
+# Step to list all installed Python packages and their locations
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # List installed packages to verify nexla installation
+      pip list
+  displayName: 'List Installed Python Packages'
+  continueOnError: false
+
+# Step to check if Nexla is in the correct location
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Check if nexla is installed and where it is located
+      which nexla
+  displayName: 'Verify Nexla Installation Location'
+  continueOnError: false
+
 # Step to add Nexla to the PATH (adjust for Windows)
 - task: Bash@3
   inputs:
