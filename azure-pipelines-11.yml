@@ -38,18 +38,6 @@ steps:
   displayName: 'Find Nexla Installation Path'
   continueOnError: false
 
-# Step to add Nexla to the PATH (adjust for Windows)
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Update PATH for Windows system (adjust according to your Python environment)
-      export PATH=$PATH:/home/groot/.local/bin  # Adjust this based on where nexla is installed on your system
-      echo "Updated PATH: $PATH"
-      nexla --version
-  displayName: 'Update PATH for Nexla'
-  continueOnError: false
-
 # Step to set API environment variables
 - task: Bash@3
   inputs:
