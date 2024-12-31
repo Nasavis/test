@@ -33,20 +33,9 @@ steps:
       echo "API_KEY is: $API_KEY"
       nexla env configure --api-key-use-env
   continueOnError: false
-  displayName: 'Initializing Configuration Parameters'
+  displayName: 'Initializing and Configure Nexla CLI'
 
-# Step 3: Configure Nexla CLI (Init Access)
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo "Activating virtual environment"
-      source venv/bin/activate
-      echo "Configuring Nexla CLI"
-  continueOnError: false
-  displayName: 'Configure Nexla CLI (Init Access)'
-
-# Step 4: Export Nexla Pipeline
+# Step 3: Export Nexla Pipeline
 - task: Bash@3
   inputs:
     targetType: 'inline'
