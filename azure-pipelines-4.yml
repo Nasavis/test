@@ -1,0 +1,36 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: 'Default'
+  demands:
+    - Agent.Name -equals IMGROOT
+    
+variables:
+  System.Debug: true
+
+parameters:
+- name: nexla_id
+  displayName: Nexla ID
+  type: string
+  default: '$(NEXLA_SOURCE_ID)'
+
+steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      export API_URL=https://dataops.nexla.io/nexla-api
+      export API_KEY=19e760802abb425992b3b4481ba051b8
+  continueOnError: false
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'nexla flows export --s 53711 -o 53711.json'
+  continueOnError: false
