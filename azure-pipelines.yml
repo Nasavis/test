@@ -54,6 +54,6 @@ steps:
       echo "Activating virtual environment"
       source venv/bin/activate
       echo "Exporting Nexla pipeline"
-      nexla flows export --s 53711 -o 53711.json
+      nexla flows export --s 53234 -o 53234.json -a
   continueOnError: false
   displayName: 'Exporting Nexla Pipeline'
