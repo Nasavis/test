@@ -26,6 +26,7 @@ steps:
     targetType: 'inline'
     script: |
       echo "Exporting API configuration"
+      source venv/bin/activate
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
       echo "API_URL is: $API_URL"
@@ -39,7 +40,7 @@ steps:
     targetType: 'inline'
     script: |
       echo "Activating virtual environment"
-      source venv/bin/activate
+      #source venv/bin/activate
       echo "Configuring Nexla CLI"
       nexla env configure --api-key-use-env
   continueOnError: false
@@ -51,7 +52,7 @@ steps:
     targetType: 'inline'
     script: |
       echo "Activating virtual environment"
-      source venv/bin/activate
+      #source venv/bin/activate
       echo "Exporting Nexla pipeline"
       nexla flows export --s 53711 -o 53711.json
   continueOnError: false
