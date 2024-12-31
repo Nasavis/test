@@ -22,9 +22,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo "Installing wheel file"
+      echo "Installing Nexla Wheel File"
       echo $(Build.SourcesDirectory)
-      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
+      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages ----force-reinstall
   displayName: 'Install Nexla Wheel File'
   continueOnError: false
 
@@ -33,21 +33,23 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      # Use pip show to find the installation path of nexla
+      # Use pip show to find the installation path of Nexla
       pip show nexla
-      whereis nexla
-      which nexla
   displayName: 'Find Nexla Installation Path'
   continueOnError: false
 
-# Step to add Nexla to the PATH (adjust for Windows)
+# Step to add Nexla to the PATH (adjust for Windows and Linux environments)
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
       # Update PATH for Windows system (adjust according to your Python environment)
-      export PATH=$PATH:/home/groot/.local/lib/python3.12/site-packages
-      export PATH=$PATH:/home/groot/.local/bin/
+      if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        export PATH=$PATH:/home/groot/.local/lib/python3.12/site-packages
+        export PATH=$PATH:/home/groot/.local/bin/
+      else
+        export PATH=$PATH:/mnt/c/Users/admin/AppData/Local/Python/Python312/Scripts
+      fi
       echo "Updated PATH: $PATH"
   displayName: 'Update PATH for Nexla'
   continueOnError: false
@@ -57,7 +59,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      nexla --version 
+      nexla --version
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
       echo "API_URL is: $API_URL"
