@@ -41,7 +41,7 @@ steps:
     targetType: 'inline'
     script: |
       # Assuming nexla is installed in ~/.local/bin or similar
-      export PATH=$PATH:\home\groot\.local\bin
+      export PATH=$PATH:\home\groot\.local\lib\python3.12\site-packages
       echo "Updated PATH: $PATH"
       nexla --version
   continueOnError: false
