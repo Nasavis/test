@@ -33,5 +33,6 @@ steps:
       echo "API_URL is: $API_URL"
       echo "API_KEY is: $API_KEY"
       nexla env configure --api-key-use-env
+      echo "Logged in Successfully"
 
   displayName: 'Run Nexla Command'
