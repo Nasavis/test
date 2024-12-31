@@ -25,5 +25,6 @@ steps:
     script: |
       # Now run the Nexla command that was failing previously
       echo "Running Nexla command"
+      source venv/bin/activate
       nexla --version  # Replace with your actual Nexla command
   displayName: 'Run Nexla Command'
