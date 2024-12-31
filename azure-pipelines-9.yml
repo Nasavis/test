@@ -23,7 +23,7 @@ steps:
     script: |
       echo "Installing wheel file"
       echo $(Build.SourcesDirectory)
-      pip install $(Build.SourcesDirectory)/nexla-3.2.3-py3-none-any.whl --break-system-packages
+      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
   continueOnError: false
 
 
