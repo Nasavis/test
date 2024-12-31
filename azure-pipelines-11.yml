@@ -24,7 +24,7 @@ steps:
     script: |
       echo "Installing wheel file"
       echo $(Build.SourcesDirectory)
-      pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
+      pip3 install nexla-3.2.3-py3-none-any.whl --break-system-packages
   displayName: 'Install Nexla Wheel File'
   continueOnError: false
 
