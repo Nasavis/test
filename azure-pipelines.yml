@@ -15,6 +15,7 @@ steps:
       # Ensure the correct Python environment is activated
       echo "Checking Python version"
       python --version
+      python -m venv venv
       source venv/bin/activate
       pip install nexla-3.2.3-py3-none-any.whl --force
   displayName: 'Install and Venv Activated'
