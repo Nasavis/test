@@ -13,7 +13,7 @@ parameters:
   default: '$(NEXLA_SOURCE_ID)'
 
 variables:
-  System/Debubg: true
+  System/Debug: true
 
 steps:
 
@@ -26,6 +26,25 @@ steps:
       pip install nexla-3.2.3-py3-none-any.whl --break-system-packages
   continueOnError: false
 
+# Step to find and print the installed location of nexla
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Use pip show to find the installation path of nexla
+      pip show nexla
+  continueOnError: false
+
+# Optional: Add nexla to the PATH if needed
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Assuming nexla is installed in ~/.local/bin or similar
+      export PATH=$PATH:/home/groot/.local/bin
+      echo "Updated PATH: $PATH"
+      nexla --version
+  continueOnError: false
 
 - task: Bash@3
   inputs:
