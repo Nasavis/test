@@ -1,5 +1,5 @@
 trigger:
-- main
+  - main
 
 pool:
   name: 'Default'
@@ -7,31 +7,53 @@ pool:
     - Agent.Name -equals IMGROOT
 
 steps:
-
+# Step 1: Install Nexla CLI
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      # Ensure the correct Python environment is activated
-      echo "Checking Python version"
-      python --version
+      echo "Setting up Python environment"
       python -m venv venv
       source venv/bin/activate
-      pip install nexla-3.2.3-py3-none-any.whl --force
-  displayName: 'Install and Venv Activated'
+      echo "Installing Nexla CLI"
+      pip install nexla-3.2.3-py3-none-any.whl
+  continueOnError: false
+  displayName: 'Installing Nexla CLI'
 
+# Step 2: Initialize Configuration Parameters
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      # Now run the Nexla command that was failing previously
-      echo "Running Nexla command"
-      nexla --version
+      echo "Exporting API configuration"
+      source venv/bin/activate
       export API_URL=https://dataops.nexla.io/nexla-api
       export API_KEY=19e760802abb425992b3b4481ba051b8
       echo "API_URL is: $API_URL"
       echo "API_KEY is: $API_KEY"
       nexla env configure --api-key-use-env
-      echo "Logged in Successfully"
+  continueOnError: false
+  displayName: 'Initializing Configuration Parameters'
 
-  displayName: 'Run Nexla Command'
+# Step 3: Configure Nexla CLI (Init Access)
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Activating virtual environment"
+      source venv/bin/activate
+      echo "Configuring Nexla CLI"
+  continueOnError: false
+  displayName: 'Configure Nexla CLI (Init Access)'
+
+# Step 4: Export Nexla Pipeline
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Activating virtual environment"
+      source venv/bin/activate
+      echo "Exporting Nexla pipeline"
+      nexla flows export --s 53711 -o 53711.json
+  continueOnError: false
+  displayName: 'Exporting Nexla Pipeline'
