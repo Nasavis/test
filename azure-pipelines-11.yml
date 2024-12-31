@@ -35,6 +35,8 @@ steps:
     script: |
       # Use pip show to find the installation path of nexla
       pip show nexla
+      whereis nexla
+      which nexla
   displayName: 'Find Nexla Installation Path'
   continueOnError: false
 
