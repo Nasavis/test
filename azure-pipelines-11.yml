@@ -45,6 +45,7 @@ steps:
     script: |
       # Update PATH for Windows system (adjust according to your Python environment)
       export PATH=$PATH:/home/groot/.local/lib/python3.12/site-packages
+      export PATH=$PATH:/home/groot/.local/bin/
       echo "Updated PATH: $PATH"
   displayName: 'Update PATH for Nexla'
   continueOnError: false
