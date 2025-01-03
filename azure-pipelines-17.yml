@@ -26,6 +26,7 @@ steps:
     targetType: 'inline'
     script: |
       echo "Exporting API configuration"
+      source venv/bin/activate
       env API_URL=https://dataops.nexla.io/nexla-api API_KEY=19e760802abb425992b3b4481ba051b8 nexla env configure --api-key-use-env
   continueOnError: false
   displayName: 'Initializing and Configure Nexla CLI'
