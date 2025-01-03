@@ -1,0 +1,43 @@
+trigger:
+- main
+pool:
+  demands:
+  - Agent.Name -equals IMGROOT
+steps:
+# Step 1: Install Nexla CLI
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Setting up Python environment"
+      python -m venv venv
+      source venv/bin/activate
+      echo "Installing Nexla CLI"
+      pip install nexla-3.2.3-py3-none-any.whl
+  continueOnError: false
+  displayName: 'Installing Nexla CLI'
+# Step 2: Initialize Configuration Parameters
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Exporting API configuration"
+      source venv/bin/activate
+      export API_URL=https://dataops.nexla.io/nexla-api
+      export API_KEY=19e760802abb425992b3b4481ba051b8
+      echo "API_URL is: $API_URL"
+      echo "API_KEY is: $API_KEY"
+      nexla env configure --api-key-use-env
+  continueOnError: false
+  displayName: 'Initializing and Configuring Nexla CLI'
+# Step 3: Export Nexla Pipeline
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Activating virtual environment"
+      source venv/bin/activate
+      echo "Exporting Nexla pipeline"
+      nexla flows export --s 53234 -o 53234.json
+  continueOnError: false
+  displayName: 'Exporting Nexla Pipeline'
